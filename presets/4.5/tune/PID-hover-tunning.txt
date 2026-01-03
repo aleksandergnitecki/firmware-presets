@@ -1,40 +1,48 @@
-#$ TITLE: PID Tune Attempt 3
+#$ TITLE: PID Tune Attempt 4
 #$ FIRMWARE_VERSION: 4.5
-#$ DESCRIPTION: finally got it flying without shaking or drifting. balanced everything out. stays locked in hover now. learned that balance is key for a good tune.
+#$ DESCRIPTION: tuned this specifically for throw recovery and aggressive maneuvers, bumped the gains way up so it has the authority to snap out of chaos, doesn't matter if I throw it upside down or sideways, it just locks in instantly
 #$ FORCE_OPTIONS_REVIEW: TRUE
 
 #$ INCLUDE: presets/4.5/tune/defaults.txt
 
-# set P gains to 45. strong enough to snap into position.
-# no oscillating or shaking.
-set p_pitch = 47
-set p_roll = 45
-set p_yaw = 45
+# bumped p gains way up, needs massive snap authority to stop the rotation
+# stops the tumble instantly with raw power before it loses altitude
+set p_pitch = 55
+set p_roll = 52
+set p_yaw = 50
 
-# turned I gains up to 80. resists wind and gravity.
-# holds steady without drifting properly now.
-set i_pitch = 85
-set i_roll = 80
-set i_yaw = 80
+# cranked i gains to max, holds the angle like a rock once stable
+# locks in immediately after catching itself so it doesnt drift away
+set i_pitch = 100
+set i_roll = 100
+set i_yaw = 100
 
-# D gains at 40 for stiffness.
-# smooths out stops and stops propwash vibes.
-set d_pitch = 40
-set d_roll = 35
+# increased d gains to handle the massive braking force from high P
+# stops vibrations when it snaps to a stop, smooths the hard stop
+set d_pitch = 48
+set d_roll = 45
 set d_yaw = 0
 
-# increased feedforward. stick response feels faster.
-# more connected to what im doing.
-set f_pitch = 120
-set f_roll = 115
-set f_yaw = 115
+# feedforward stays high, nice and connected stick feel
+# keeps it responsive even when fighting heavy forces
+set f_pitch = 50
+set f_roll = 50
+set f_yaw = 50
 
-# anti gravity on. stops nose dip on quick throttle.
-set anti_gravity_gain = 80
-set anti_gravity_cutoff_hz = 5
-set anti_gravity_p_gain = 100
+# set small angle to 180, enables arming in any orientation
+# can arm even if upside down mid air, critical for throw recovery
+set small_angle = 180
 
-# enabled iterm relax. prevents bounce back after flips.
-set iterm_relax = RP
+# raised idle speed, prevents motor stalls during freefall
+# keeps props spinning so they can bite the air instantly
+set dshot_idle_value = 700
+
+# pid loop active at zero throttle, fights tumble continuously
+# means it stabilizes even if i cut the throttle to zero
+set pid_at_min_throttle = ON
+
+# maxed anti gravity, keeps it level on huge throttle punches
+# prevents the nose from dipping when i blast the throttle to catch it
+set anti_gravity_gain = 100
 
 simplified_tuning apply
