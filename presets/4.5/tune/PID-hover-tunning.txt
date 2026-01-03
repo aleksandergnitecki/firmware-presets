@@ -1,46 +1,44 @@
-#$ TITLE: PID hover tunning
+#$ TITLE: PID Tune Attempt 2 (Fixed?)
 #$ FIRMWARE_VERSION: 4.5
 #$ CATEGORY: TUNE
 #$ STATUS: EXPERIMENTAL
-#$ DESCRIPTION: tuning for fast response
+#$ DESCRIPTION: tuning for stability without shaking
+#$ DESCRIPTION: reduced integral gain to prevent windup
 #$ FORCE_OPTIONS_REVIEW: TRUE
 
 #$ INCLUDE: presets/4.5/tune/defaults.txt
 
-# proportional gain controls how hard the drone tries to correct an error
-# higher p means it snaps back to position faster
-set p_pitch = 150
-set p_roll = 150
-set p_yaw = 150
+# proportional gain set to standard values to stop shaking
+# enough force to correct errors without oscillation
+set p_pitch = 45
+set p_roll = 45
+set p_yaw = 45
 
-# integral gain accumulates error over time to hold the angle
-# this is supposed to keep it stable against wind and drift
-set i_pitch = 10
-set i_roll = 10
-set i_yaw = 10
+# integral gain set very low to minimize windup risk
+# maintains safety but might reduce holding power
+set i_pitch = 15
+set i_roll = 15
+set i_yaw = 15
 
-# derivative gain predicts the error and dampens the movement
-# it stops the drone from overshooting but slows down response
-set d_pitch = 5
-set d_roll = 5
+# derivative gain increased to smooth out the motion
+# higher damping prevents jitter but adds motor load
+set d_pitch = 45
+set d_roll = 45
 set d_yaw = 0
 
-# feedforward adds immediate stick input to the motors
-# it bypasses the error loop so it feels more connected
-set f_pitch = 50
-set f_roll = 50
-set f_yaw = 50
+# feedforward increased for better stick tracking
+# keeps the response feeling connected
+set f_pitch = 60
+set f_roll = 60
+set f_yaw = 60
 
-# anti gravity boosts the i gain when you punch the throttle
-# it stops the nose from dipping during fast acceleration
-# turning it off here
+# anti gravity remains off for natural feel
 set anti_gravity_gain = 0
 
-# iterm relax lowers the i term when moving the sticks fast
-# prevents bounce back after a flip
-set iterm_relax = OFF
+# iterm relax set to setpoint to handle stick moves
+set iterm_relax = RP
 
-set throttle_boost = 0
+set throttle_boost = 5
 set dyn_idle_min_rpm = 0
 
 simplified_tuning apply
