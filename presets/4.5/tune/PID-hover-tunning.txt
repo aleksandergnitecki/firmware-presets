@@ -1,0 +1,46 @@
+#$ TITLE: PID hover tunning
+#$ FIRMWARE_VERSION: 4.5
+#$ CATEGORY: TUNE
+#$ STATUS: EXPERIMENTAL
+#$ DESCRIPTION: tuning for fast response
+#$ FORCE_OPTIONS_REVIEW: TRUE
+
+#$ INCLUDE: presets/4.5/tune/defaults.txt
+
+# proportional gain controls how hard the drone tries to correct an error
+# higher p means it snaps back to position faster
+set p_pitch = 150
+set p_roll = 150
+set p_yaw = 150
+
+# integral gain accumulates error over time to hold the angle
+# this is supposed to keep it stable against wind and drift
+set i_pitch = 10
+set i_roll = 10
+set i_yaw = 10
+
+# derivative gain predicts the error and dampens the movement
+# it stops the drone from overshooting but slows down response
+set d_pitch = 5
+set d_roll = 5
+set d_yaw = 0
+
+# feedforward adds immediate stick input to the motors
+# it bypasses the error loop so it feels more connected
+set f_pitch = 50
+set f_roll = 50
+set f_yaw = 50
+
+# anti gravity boosts the i gain when you punch the throttle
+# it stops the nose from dipping during fast acceleration
+# turning it off here
+set anti_gravity_gain = 0
+
+# iterm relax lowers the i term when moving the sticks fast
+# prevents bounce back after a flip
+set iterm_relax = OFF
+
+set throttle_boost = 0
+set dyn_idle_min_rpm = 0
+
+simplified_tuning apply
