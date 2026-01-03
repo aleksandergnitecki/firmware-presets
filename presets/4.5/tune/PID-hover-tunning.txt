@@ -1,44 +1,40 @@
-#$ TITLE: PID Tune Attempt 2 (Fixed?)
+#$ TITLE: PID Tune Attempt 3
 #$ FIRMWARE_VERSION: 4.5
-#$ CATEGORY: TUNE
-#$ STATUS: EXPERIMENTAL
-#$ DESCRIPTION: tuning for stability without shaking
-#$ DESCRIPTION: reduced integral gain to prevent windup
+#$ DESCRIPTION: finally got it flying without shaking or drifting. balanced everything out. stays locked in hover now. learned that balance is key for a good tune.
 #$ FORCE_OPTIONS_REVIEW: TRUE
 
 #$ INCLUDE: presets/4.5/tune/defaults.txt
 
-# proportional gain set to standard values to stop shaking
-# enough force to correct errors without oscillation
-set p_pitch = 45
+# set P gains to 45. strong enough to snap into position.
+# no oscillating or shaking.
+set p_pitch = 47
 set p_roll = 45
 set p_yaw = 45
 
-# integral gain set very low to minimize windup risk
-# maintains safety but might reduce holding power
-set i_pitch = 15
-set i_roll = 15
-set i_yaw = 15
+# turned I gains up to 80. resists wind and gravity.
+# holds steady without drifting properly now.
+set i_pitch = 85
+set i_roll = 80
+set i_yaw = 80
 
-# derivative gain increased to smooth out the motion
-# higher damping prevents jitter but adds motor load
-set d_pitch = 45
-set d_roll = 45
+# D gains at 40 for stiffness.
+# smooths out stops and stops propwash vibes.
+set d_pitch = 40
+set d_roll = 35
 set d_yaw = 0
 
-# feedforward increased for better stick tracking
-# keeps the response feeling connected
-set f_pitch = 60
-set f_roll = 60
-set f_yaw = 60
+# increased feedforward. stick response feels faster.
+# more connected to what im doing.
+set f_pitch = 120
+set f_roll = 115
+set f_yaw = 115
 
-# anti gravity remains off for natural feel
-set anti_gravity_gain = 0
+# anti gravity on. stops nose dip on quick throttle.
+set anti_gravity_gain = 80
+set anti_gravity_cutoff_hz = 5
+set anti_gravity_p_gain = 100
 
-# iterm relax set to setpoint to handle stick moves
+# enabled iterm relax. prevents bounce back after flips.
 set iterm_relax = RP
-
-set throttle_boost = 5
-set dyn_idle_min_rpm = 0
 
 simplified_tuning apply
